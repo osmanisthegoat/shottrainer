@@ -1,0 +1,74 @@
+-- TeaHack | Basketball Legends Shot Trainer UI
+-- Practice tracker only; does not automate shots.
+
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "TeaHackShotTrainer"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.fromOffset(240, 150)
+frame.Position = UDim2.new(0.5, -120, 0.65, 0)
+frame.BackgroundColor3 = Color3.fromRGB(20, 22, 28)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+frame.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 10)
+corner.Parent = frame
+
+local function label(text, pos, size, parent)
+    local obj = Instance.new("TextLabel")
+    obj.Size = size
+    obj.Position = pos
+    obj.BackgroundTransparency = 1
+    obj.Text = text
+    obj.TextColor3 = Color3.new(1, 1, 1)
+    obj.TextScaled = true
+    obj.Font = Enum.Font.GothamBold
+    obj.Parent = parent
+    return obj
+end
+
+label("TEAHACK | SHOT TRAINER",
+    UDim2.fromOffset(8, 8), UDim2.new(1, -16, 0, 28), frame)
+
+local status = label("Shots tracked: 0",
+    UDim2.fromOffset(10, 45), UDim2.new(1, -20, 0, 25), frame)
+
+local count = 0
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(1, -20, 0, 38)
+button.Position = UDim2.fromOffset(10, 83)
+button.Text = "LOG PRACTICE SHOT"
+button.TextScaled = true
+button.Font = Enum.Font.GothamBold
+button.TextColor3 = Color3.new(1, 1, 1)
+button.BackgroundColor3 = Color3.fromRGB(45, 110, 220)
+button.Parent = frame
+
+local bc = Instance.new("UICorner")
+bc.CornerRadius = UDim.new(0, 7)
+bc.Parent = button
+
+button.Activated:Connect(function()
+    count += 1
+    status.Text = "Shots tracked: " .. count
+end)
+
+local close = Instance.new("TextButton")
+close.Size = UDim2.fromOffset(25, 25)
+close.Position = UDim2.new(1, -30, 0, 5)
+close.Text = "X"
+close.TextColor3 = Color3.new(1, 1, 1)
+close.BackgroundTransparency = 1
+close.Parent = frame
+
+close.Activated:Connect(function()
+    gui:Destroy()
+end)
